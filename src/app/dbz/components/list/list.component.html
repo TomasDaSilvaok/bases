@@ -1,5 +1,5 @@
 <h4>List</h4>
-<ul class="list-group">
+<ul class="list-group" *ngIf="characterList.length > 0; else noCharacterList">
   <li
     *ngFor="
       let character of characterList;
@@ -7,14 +7,21 @@
       let isEven = even;
       let isOdd = odd
     "
-    class="list-group-item"
+    class="list-group-item d-flex justify-content-between align-items-center"
     [ngClass]="{
       'list-group-item-info': isEven,
       'list-group-item-primary': isOdd
     }"
   >
-    <span class="text-primary">{{ i + 1 }}.</span>
-    <span> {{ character.name }} - </span>
-    <span> <strong>Power:</strong> {{ character.power }} </span>
+    <div>
+      <span class="text-primary">{{ i + 1 }}.</span>
+      <span> {{ character.name | titlecase }} - </span>
+      <span> <strong>Power:</strong> {{ character.power }} </span>
+    </div>
+    <button class="btn btn-danger" (click)="onDeleteCharacter(i)">X</button>
   </li>
 </ul>
+
+<ng-template #noCharacterList>
+  <h4 class="text-danger">There are no characters left.</h4>
+</ng-template>
